@@ -1,0 +1,43 @@
+name: Build and Package ani-rss
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🧩 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🛠 Set up Node.js 18 and install pnpm
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: 🔧 Set up Java 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: 📦 Make package.sh executable
+      run: chmod +x ./package.sh
+
+    - name: 🚀 Run build script
+      run: ./package.sh
+
+    - name: 📤 Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ani-rss-artifacts
+        path: |
+          target/ani-rss-jar-with-dependencies.jar
+          target/ani-rss-jar-with-dependencies.jar.md5
+          target/ani-rss-launcher.exe
+          target/ani-rss-launcher.exe.md5
