@@ -60,7 +60,7 @@ deploy_app() {
 
     echo "正在下载 ani-rss-jar-with-dependencies.jar"
     # 下载jar包
-    if ! wget -q https://gh.zwnes.xyz/https://github.com/UcnacDx2/ani-rss/releases/latest/download/ani-rss-jar-with-dependencies.jar -O "$INSTALL_DIR/ani-rss-jar-with-dependencies.jar"; then
+    if ! wget -q https://gh.zwnes.xyz/github.com/UcnacDx2/ani-rss/releases/latest/download/ani-rss-jar-with-dependencies.jar -O "$INSTALL_DIR/ani-rss-jar-with-dependencies.jar"; then
         echo -e "${RED}下载 ani-rss-jar-with-dependencies.jar 失败${NC}"
         exit 1
     fi
