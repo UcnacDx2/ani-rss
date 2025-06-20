@@ -1,11 +1,10 @@
-name: Build and Package ani-rss
+name: Build and Release ani-rss
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:  # 手动触发
+    tags:
+      - 'v*'       # 例如 v1.0.0，v1.2.3 等
+  workflow_dispatch:  # 手动触发也可以测试
 
 jobs:
   build:
@@ -32,12 +31,15 @@ jobs:
     - name: 🚀 Run build script
       run: ./package.sh
 
-    - name: 📤 Upload build artifacts
-      uses: actions/upload-artifact@v4
+    - name: 📤 Create GitHub Release and Upload Artifacts
+      uses: softprops/action-gh-release@v2
       with:
-        name: ani-rss-artifacts
-        path: |
+        name: Release ${{ github.ref_name }}
+        tag_name: ${{ github.ref_name }}
+        files: |
           target/ani-rss-jar-with-dependencies.jar
           target/ani-rss-jar-with-dependencies.jar.md5
           target/ani-rss-launcher.exe
           target/ani-rss-launcher.exe.md5
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
