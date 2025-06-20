@@ -33,7 +33,7 @@ jobs:
       run: ./package.sh
 
     - name: 📤 Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ani-rss-artifacts
         path: |
